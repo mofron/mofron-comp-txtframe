@@ -1,0 +1,5 @@
+<require>
+    <tag module="mofron-comp-txtframe">TxtFrame</tag>
+</require>
+
+<TxtFrame height="0.5rem">textframe</TxtFrame>
