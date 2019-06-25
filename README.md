@@ -29,6 +29,8 @@ npm install mofron mofron-comp-txtframe
 | ◯  | text | string/mofron-comp-text/array | text contents |
 | | center | boolean | horizonal center position flag |
 | | | boolean | vertical center position flag |
-| | x_center | boolean | center position flag |
-| | y_center | boolean | center position flag |
+| | x_center | boolean | true: text is centered horizontally [default] |
+| | | | false: text is not centered |
+| | y_center | boolean | true: text is centered vertically [default] |
+| | | | false: text is not centered |
 

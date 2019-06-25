@@ -119,7 +119,8 @@ mf.comp.TxtFrame = class extends Frame {
     /**
      * horizonal center position of text contents
      *
-     * @param (boolean) center position flag
+     * @param (boolean) true: text is centered horizontally [default]
+     *                  false: text is not centered
      * @return (boolean) center position flag
      * @type parameter
      */
@@ -133,7 +134,8 @@ mf.comp.TxtFrame = class extends Frame {
     /**
      * vertical center position of text contents
      *
-     * @param (boolean) center position flag
+     * @param (boolean) true: text is centered vertically [default]
+     *                  false: text is not centered
      * @return (boolean) center position flag
      * @type parameter
      */
