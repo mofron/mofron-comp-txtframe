@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-txtframe",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "[mofron](https://mofron.github.io/mofron/) is module based frontend framework.",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/simpart/mofron-comp-txtframe.git"
+  },
+  "dependencies" : {
+    "mofron-comp-text" : "",
+    "mofron-comp-frame" : "",
+    "mofron-effect-vrtpos" : "",
+    "mofron-effect-hrzpos" : ""
   },
   "keywords": [
     "front-end"
