@@ -145,6 +145,21 @@ mf.comp.TxtFrame = class extends Frame {
             throw e;
         }
     }
+    
+    /**
+     * text color setter/getter
+     * 
+     * @param (string/array) string: color name
+     *                       array: [red, green, blue, alpha]
+     * @return (string) text color
+     * @type parameter
+     */
+    mainColor (prm) {
+        try { return this.text().color(prm); } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
 }
 module.exports = mf.comp.TxtFrame;
 /* end of file */

@@ -33,4 +33,6 @@ npm install mofron mofron-comp-txtframe
 | | | | false: text is not centered |
 | | y_center | boolean | true: text is centered vertically [default] |
 | | | | false: text is not centered |
+| | mainColor | string/array | string: color name |
+| | | | array: [red, green, blue, alpha] |
 
