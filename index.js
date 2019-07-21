@@ -155,7 +155,15 @@ mf.comp.TxtFrame = class extends Frame {
      * @type parameter
      */
     mainColor (prm) {
-        try { return this.text().color(prm); } catch (e) {
+        try {
+            if (undefined === prm) {
+                return (0 === this.text().length) ? null : this.text()[0].mainColor();
+            }
+            let txt = this.text();
+            for (let tidx in txt) {
+                txt[tidx].mainColor(prm);
+            }
+        } catch (e) {
             console.error(e.stack);
             throw e;
         }
