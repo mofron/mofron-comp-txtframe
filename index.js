@@ -57,17 +57,39 @@ mf.comp.TxtFrame = class extends Frame {
     beforeRender () {
         try {
             super.beforeRender();
-            let txt = this.text();
+	    this.setTxtpos(this.text());
+        } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
+     * set text position
+     * set hrzpos,vrtpos effect to text component
+     * 
+     * @type private
+     */
+    setTxtpos (txt) {
+        try {
             /* set vertical position */
             if (true === this.x_center()) {
                 for (let tidx in txt) {
-                    txt[tidx].effect([new Hrzpos("center")]);
+                    if (null === txt[tidx].effect(["HrzPos", "TxtFrame"])) {
+                        txt[tidx].effect(
+                            new Hrzpos({ type: "center", tag: "TxtFrame" })
+                        );
+                    }
                 }
             }
             /* set horizonal position */
             if (true === this.y_center()) {
                 for (let tidx in txt) {
-                    txt[tidx].effect([new Vrtpos("center")]);
+                    if (null === txt[tidx].effect(["VrtPos", "TxtFrame"])) {
+                        txt[tidx].effect(
+                            new Vrtpos({ type: "center", tag: "TxtFrame" })
+                        );
+                    }
                 }
             }
         } catch (e) {
@@ -95,6 +117,9 @@ mf.comp.TxtFrame = class extends Frame {
                 prm = new Text(prm);
             }
             this.child(prm);
+            if (undefined !== prm) {
+	        this.setTxtpos([prm]);
+            }
             return this.arrayMember("text", "Text", prm);
         } catch (e) {
             console.error(e.stack);
