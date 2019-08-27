@@ -26,13 +26,15 @@ npm install mofron mofron-comp-txtframe
 
 |Simple<br>Param | Parameter Name | Type | Description |
 |:--------------:|:---------------|:-----|:------------|
-| ◯  | text | string/mofron-comp-text/array | text contents |
+| ◯  | text | mixed | string/mofron-comp-text: text contents |
+| | | | array: text contents list |
 | | center | boolean | horizonal center position flag |
 | | | boolean | vertical center position flag |
-| | x_center | boolean | true: text is centered horizontally [default] |
+| | x_center | boolean | true: text is centered horizontally (default) |
 | | | | false: text is not centered |
-| | y_center | boolean | true: text is centered vertically [default] |
+| | y_center | boolean | true: text is centered vertically (default) |
 | | | | false: text is not centered |
-| | mainColor | string/array | string: color name |
+| | mainColor | mixed (color) | string: color name, #hex |
 | | | | array: [red, green, blue, alpha] |
+| | | option | style option |
 

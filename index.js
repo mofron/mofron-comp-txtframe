@@ -17,7 +17,7 @@ mf.comp.TxtFrame = class extends Frame {
     /**
      * initialize component
      * 
-     * @param (mixed) string/mofron-comp-text/array: text contents
+     * @param (mixed) 'text' parameter
      *                object: component option
      * @pmap text
      * @type private
@@ -79,7 +79,8 @@ mf.comp.TxtFrame = class extends Frame {
     /**
      * text contents
      *
-     * @param (string/mofron-comp-text/array) text contents
+     * @param (mixed) string/mofron-comp-text: text contents
+     *                array: text contents list
      * @return (array) text contents
      * @type parameter
      */
@@ -119,7 +120,7 @@ mf.comp.TxtFrame = class extends Frame {
     /**
      * horizonal center position of text contents
      *
-     * @param (boolean) true: text is centered horizontally [default]
+     * @param (boolean) true: text is centered horizontally (default)
      *                  false: text is not centered
      * @return (boolean) center position flag
      * @type parameter
@@ -134,7 +135,7 @@ mf.comp.TxtFrame = class extends Frame {
     /**
      * vertical center position of text contents
      *
-     * @param (boolean) true: text is centered vertically [default]
+     * @param (boolean) true: text is centered vertically (default)
      *                  false: text is not centered
      * @return (boolean) center position flag
      * @type parameter
@@ -149,19 +150,20 @@ mf.comp.TxtFrame = class extends Frame {
     /**
      * text color setter/getter
      * 
-     * @param (string/array) string: color name
-     *                       array: [red, green, blue, alpha]
+     * @param (mixed (color)) string: color name, #hex
+     *                        array: [red, green, blue, alpha]
+     * @param (option) style option
      * @return (string) text color
      * @type parameter
      */
-    mainColor (prm) {
+    mainColor (prm, opt) {
         try {
             if (undefined === prm) {
                 return (0 === this.text().length) ? null : this.text()[0].mainColor();
             }
             let txt = this.text();
             for (let tidx in txt) {
-                txt[tidx].mainColor(prm);
+                txt[tidx].mainColor(prm, opt);
             }
         } catch (e) {
             console.error(e.stack);
