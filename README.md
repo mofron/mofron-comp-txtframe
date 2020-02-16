@@ -20,19 +20,20 @@ npm install mofron mofron-comp-txtframe
     <tag module="mofron-comp-txtframe">TxtFrame</tag>
 </require>
 
-<TxtFrame height="0.5rem">textframe</TxtFrame>
+<TxtFrame size=(2rem,1rem)>textframe</TxtFrame>
 ```
+
 # Parameter
 
-|Simple<br>Param | Parameter Name | Type | Description |
-|:--------------:|:---------------|:-----|:------------|
+| Short<br>Form | Parameter Name | Type | Description |
+|:-------------:|:---------------|:-----|:------------|
 | ◯  | text | mixed | string/mofron-comp-text: text contents |
 | | | | array: text contents list |
 | | center | boolean | horizonal center position flag |
 | | | boolean | vertical center position flag |
-| | x_center | boolean | true: text is centered horizontally (default) |
+| | xCenter | boolean | true: text is centered horizontally (default) |
 | | | | false: text is not centered |
-| | y_center | boolean | true: text is centered vertically (default) |
+| | yCenter | boolean | true: text is centered vertically (default) |
 | | | | false: text is not centered |
 | | mainColor | mixed (color) | string: color name, #hex |
 | | | | array: [red, green, blue, alpha] |

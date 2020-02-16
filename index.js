@@ -4,30 +4,36 @@
  *        text contents in the frame component.
  * @feature text is automatically centered
  *          center position can select vertical or horizonal by center parameter
- * @author simpart
+ * @license MIT
  */
-const mf = require("mofron");
 const Text = require("mofron-comp-text");
 const Frame = require("mofron-comp-frame");
 const Vrtpos = require("mofron-effect-vrtpos");
 const Hrzpos = require("mofron-effect-hrzpos");
+const comutl = mofron.util.common;
 
-mf.comp.TxtFrame = class extends Frame {
-    
+module.exports = class extends Frame {
     /**
      * initialize component
      * 
      * @param (mixed) 'text' parameter
-     *                object: component option
-     * @pmap text
+     *                key-value: component config
+     * @short text
      * @type private
      */
-    constructor (po) {
+    constructor (prm) {
         try {
             super();
             this.name("TxtFrame");
-            this.prmMap("text");
-            this.prmOpt(po);
+            this.shortForm("text");
+            /* init config */
+            this.confmng().add("text", { type: "Text", list: true });
+	    this.confmng().add("xCenter", { type: "boolean", init: true });
+	    this.confmng().add("yCenter", { type: "boolean", init: true });
+	    /* set config */
+	    if (undefined !== prm) {
+                this.config(prm);
+	    }
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -50,55 +56,6 @@ mf.comp.TxtFrame = class extends Frame {
     }
     
     /**
-     * set center position of text
-     * 
-     * @type private
-     */
-    beforeRender () {
-        try {
-            super.beforeRender();
-	    this.setTxtpos(this.text());
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    /**
-     * set text position
-     * set hrzpos,vrtpos effect to text component
-     * 
-     * @type private
-     */
-    setTxtpos (txt) {
-        try {
-            /* set vertical position */
-            if (true === this.x_center()) {
-                for (let tidx in txt) {
-                    if (null === txt[tidx].effect(["HrzPos", "TxtFrame"])) {
-                        txt[tidx].effect(
-                            new Hrzpos({ type: "center", tag: "TxtFrame" })
-                        );
-                    }
-                }
-            }
-            /* set horizonal position */
-            if (true === this.y_center()) {
-                for (let tidx in txt) {
-                    if (null === txt[tidx].effect(["VrtPos", "TxtFrame"])) {
-                        txt[tidx].effect(
-                            new Vrtpos({ type: "center", tag: "TxtFrame" })
-                        );
-                    }
-                }
-            }
-        } catch (e) {
-            console.error(e.stack);
-            throw e;
-        }
-    }
-    
-    /**
      * text contents
      *
      * @param (mixed) string/mofron-comp-text: text contents
@@ -108,19 +65,21 @@ mf.comp.TxtFrame = class extends Frame {
      */
     text (prm) {
         try {
-            if (true === Array.isArray(prm)) {
-                for (let pidx in prm) {
-                    this.text(prm[pidx]);
-                }
-                return;
-            } else if ("string" === typeof prm) {
+	    if ("string" === typeof prm) {
                 prm = new Text(prm);
-            }
+	    }
+	    if (true === comutl.isinc(prm, "Text")) {
+                prm.effect([
+                    new Hrzpos({
+		        suspend: !this.xCenter(), type: "center", tag: "TxtFrame",
+                    }),
+                    new Vrtpos({
+                        suspend: !this.yCenter(), type: "center", tag: "TxtFrame",
+		    })
+		]);
+	    }
             this.child(prm);
-            if (undefined !== prm) {
-	        this.setTxtpos([prm]);
-            }
-            return this.arrayMember("text", "Text", prm);
+	    return this.confmng("text", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -128,7 +87,7 @@ mf.comp.TxtFrame = class extends Frame {
     }
     
     /**
-     * center position of text contents
+     * center position of text contents setter/getter
      *
      * @param (boolean) horizonal center position flag
      * @param (boolean) vertical center position flag
@@ -136,7 +95,9 @@ mf.comp.TxtFrame = class extends Frame {
      * @type parameter
      */
     center (x, y) {
-        try { return [this.x_center(x), this.y_center(y)]; } catch (e) {
+        try {
+	    return [this.x_center(x), this.y_center(y)];
+	} catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -150,8 +111,17 @@ mf.comp.TxtFrame = class extends Frame {
      * @return (boolean) center position flag
      * @type parameter
      */
-    x_center (prm) {
-        try { return this.member("x_center", "boolean", prm, true); } catch (e) {
+    xCenter (prm) {
+        try {
+	    let ret = this.confmng("xCenter", prm);
+            if (true === this.isExists()) {
+                let txt = this.text();
+		for (let tidx in txt) {
+                    txt[tidx].effect({ name: "HrzPos", tag: "TxtFrame" }).suspend(!prm);
+		}
+	    }
+	    return ret;
+	} catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -165,8 +135,17 @@ mf.comp.TxtFrame = class extends Frame {
      * @return (boolean) center position flag
      * @type parameter
      */
-    y_center (prm) {
-        try { return this.member("y_center", "boolean", prm, true); } catch (e) {
+    yCenter (prm) {
+        try {
+            let ret = this.confmng("yCenter", prm);
+	    if (true === this.isExists()) {
+	        let txt = this.text();
+                for (let tidx in txt) {
+                    txt[tidx].effect({ name: "VrtPos", tag: "TxtFrame" }).suspend(!prm);
+                }
+            }
+	    return ret;
+	} catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -196,5 +175,4 @@ mf.comp.TxtFrame = class extends Frame {
         }
     }
 }
-module.exports = mf.comp.TxtFrame;
 /* end of file */
