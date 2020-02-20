@@ -27,7 +27,7 @@ module.exports = class extends Frame {
             this.name("TxtFrame");
             this.shortForm("text");
             /* init config */
-            this.confmng().add("text", { type: "Text", list: true });
+            this.confmng().add("text", { type: "Text" });
 	    this.confmng().add("xCenter", { type: "boolean", init: true });
 	    this.confmng().add("yCenter", { type: "boolean", init: true });
 	    /* set config */
@@ -58,28 +58,30 @@ module.exports = class extends Frame {
     /**
      * text contents
      *
-     * @param (mixed) string/mofron-comp-text: text contents
-     *                array: text contents list
-     * @return (array) text contents
+     * @param (mixed) string: contents text
+     *                mofron-comp-text: contents component
+     * @return (mofron-comp-text) contents component
      * @type parameter
      */
     text (prm) {
         try {
-	    if ("string" === typeof prm) {
-                prm = new Text(prm);
+	    if (undefined === prm) {
+                /* getter */
+		return this.confmng("text");
 	    }
-	    if (true === comutl.isinc(prm, "Text")) {
-                prm.effect([
-                    new Hrzpos({
-		        suspend: !this.xCenter(), type: "center", tag: "TxtFrame",
-                    }),
-                    new Vrtpos({
-                        suspend: !this.yCenter(), type: "center", tag: "TxtFrame",
-		    })
-		]);
+	    /* setter */
+	    let set_txt = ("string" === typeof prm) ? new Text(prm) : prm;
+            if (null === this.text()) {
+	        this.confmng("text", set_txt);
+                this.child(set_txt);
+	    } else {
+                this.getTree().replace(this.text(), set_txt);
+		this.confmng("text", set_txt);
 	    }
-            this.child(prm);
-	    return this.confmng("text", prm);
+            set_txt.effect([
+                new Hrzpos({ type: "center", tag: "TxtFrame", suspend: !this.xCenter() }),
+		new Vrtpos({ type: "center", tag: "TxtFrame", suspend: !this.yCenter() })
+	    ]);
         } catch (e) {
             console.error(e.stack);
             throw e;
@@ -96,7 +98,7 @@ module.exports = class extends Frame {
      */
     center (x, y) {
         try {
-	    return [this.x_center(x), this.y_center(y)];
+	    return [this.xCenter(x), this.yCenter(y)];
 	} catch (e) {
             console.error(e.stack);
             throw e;
@@ -115,10 +117,7 @@ module.exports = class extends Frame {
         try {
 	    let ret = this.confmng("xCenter", prm);
             if (true === this.isExists()) {
-                let txt = this.text();
-		for (let tidx in txt) {
-                    txt[tidx].effect({ name: "HrzPos", tag: "TxtFrame" }).suspend(!prm);
-		}
+                this.text().effect({ name: "HrzPos", tag: "TxtFrame" }).suspend(!prm);
 	    }
 	    return ret;
 	} catch (e) {
@@ -139,10 +138,9 @@ module.exports = class extends Frame {
         try {
             let ret = this.confmng("yCenter", prm);
 	    if (true === this.isExists()) {
-	        let txt = this.text();
-                for (let tidx in txt) {
-                    txt[tidx].effect({ name: "VrtPos", tag: "TxtFrame" }).suspend(!prm);
-                }
+                let vrtpos = this.text().effect({ name: "VrtPos", tag: "TxtFrame" });
+		vrtpos.suspend(!prm);
+                vrtpos.execute();
             }
 	    return ret;
 	} catch (e) {

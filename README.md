@@ -27,8 +27,8 @@ npm install mofron mofron-comp-txtframe
 
 | Short<br>Form | Parameter Name | Type | Description |
 |:-------------:|:---------------|:-----|:------------|
-| ◯  | text | mixed | string/mofron-comp-text: text contents |
-| | | | array: text contents list |
+| ◯  | text | mixed | string: contents text |
+| | | | mofron-comp-text: contents component |
 | | center | boolean | horizonal center position flag |
 | | | boolean | vertical center position flag |
 | | xCenter | boolean | true: text is centered horizontally (default) |
