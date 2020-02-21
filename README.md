@@ -33,9 +33,11 @@ npm install mofron mofron-comp-txtframe
 | | | boolean | vertical center position flag |
 | | xCenter | boolean | true: text is centered horizontally (default) |
 | | | | false: text is not centered |
+| | | | undefined: call as getter |
 | | yCenter | boolean | true: text is centered vertically (default) |
 | | | | false: text is not centered |
+| | | | undefined: call as getter |
 | | mainColor | mixed (color) | string: color name, #hex |
 | | | | array: [red, green, blue, alpha] |
-| | | option | style option |
+| | | key-value | style option |
 

@@ -49,7 +49,23 @@ module.exports = class extends Frame {
         try {
             super.initDomConts();
             this.style({ "display" : "grid" });
+	    this.child(this.text());
         } catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
+     * set center config
+     * 
+     * @type private
+     */
+    beforeRender () {
+        try {
+            super.beforeRender();
+	    this.centerConf();
+	} catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -65,29 +81,17 @@ module.exports = class extends Frame {
      */
     text (prm) {
         try {
-	    if (undefined === prm) {
-                /* getter */
-		return this.confmng("text");
+	    if ("string" === typeof prm) {
+	        this.text().text(prm);
+                return;
 	    }
-	    /* setter */
-	    let set_txt = ("string" === typeof prm) ? new Text(prm) : prm;
-            if (null === this.text()) {
-	        this.confmng("text", set_txt);
-                this.child(set_txt);
-	    } else {
-                this.getTree().replace(this.text(), set_txt);
-		this.confmng("text", set_txt);
-	    }
-            set_txt.effect([
-                new Hrzpos({ type: "center", tag: "TxtFrame", suspend: !this.xCenter() }),
-		new Vrtpos({ type: "center", tag: "TxtFrame", suspend: !this.yCenter() })
-	    ]);
+	    return this.innerComp("text", prm, Text);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
-    
+
     /**
      * center position of text contents setter/getter
      *
@@ -106,20 +110,17 @@ module.exports = class extends Frame {
     }
     
     /**
-     * horizonal center position of text contents
+     * horizonal center position of text contents setter/getter
      *
      * @param (boolean) true: text is centered horizontally (default)
      *                  false: text is not centered
+     *                  undefined: call as getter
      * @return (boolean) center position flag
      * @type parameter
      */
     xCenter (prm) {
         try {
-	    let ret = this.confmng("xCenter", prm);
-            if (true === this.isExists()) {
-                this.text().effect({ name: "HrzPos", tag: "TxtFrame" }).suspend(!prm);
-	    }
-	    return ret;
+	    return this.confmng("xCenter", prm);
 	} catch (e) {
             console.error(e.stack);
             throw e;
@@ -127,23 +128,57 @@ module.exports = class extends Frame {
     }
     
     /**
-     * vertical center position of text contents
+     * vertical center position of text contents setter/getter
      *
      * @param (boolean) true: text is centered vertically (default)
      *                  false: text is not centered
+     *                  undefined: call as getter
      * @return (boolean) center position flag
      * @type parameter
      */
     yCenter (prm) {
         try {
-            let ret = this.confmng("yCenter", prm);
-	    if (true === this.isExists()) {
-                let vrtpos = this.text().effect({ name: "VrtPos", tag: "TxtFrame" });
-		vrtpos.suspend(!prm);
-                vrtpos.execute();
-            }
-	    return ret;
+	    return this.confmng("yCenter", prm);
 	} catch (e) {
+            console.error(e.stack);
+            throw e;
+        }
+    }
+    
+    /**
+     * set center config
+     * 
+     * @type private
+     */
+    centerConf () {
+        try {
+            let cent = this.center();
+            let chd  = this.child();
+            for (let cidx in chd) {
+		/* set horizonal center */
+                if (true === cent[0]) {
+                    if (false === this.isExists()) {
+                        chd[cidx].effect(new Hrzpos({ type: "center", tag: "TxtFrame" }));
+                    } else {
+                        let hrz = chd[cidx].effect({ name: "HrzPos" });
+			if (null !== hrz) {
+                            hrz.execute();
+			}
+		    }
+		}
+                /* set vertical center */
+                if (true === cent[1]) {
+		    if (false === this.isExists()) {
+                        chd[cidx].effect(new Vrtpos({ type: "center" }));
+                    } else {
+                        let vrt = chd[cidx].effect({ name: "VrtPos" });
+			if (null !== vrt) {
+                            vrt.execute();
+			}
+		    }
+                }
+            }
+	}  catch (e) {
             console.error(e.stack);
             throw e;
         }
@@ -154,19 +189,13 @@ module.exports = class extends Frame {
      * 
      * @param (mixed (color)) string: color name, #hex
      *                        array: [red, green, blue, alpha]
-     * @param (option) style option
+     * @param (key-value) style option
      * @return (string) text color
      * @type parameter
      */
     mainColor (prm, opt) {
         try {
-            if (undefined === prm) {
-                return (0 === this.text().length) ? null : this.text()[0].mainColor();
-            }
-            let txt = this.text();
-            for (let tidx in txt) {
-                txt[tidx].mainColor(prm, opt);
-            }
+	    return this.text().mainColor(prm,opt);
         } catch (e) {
             console.error(e.stack);
             throw e;
