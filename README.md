@@ -17,10 +17,10 @@ npm install mofron mofron-comp-txtframe
 # Sample
 ```html
 <require>
-    <tag module="mofron-comp-txtframe">TxtFrame</tag>
+    <tag load="mofron-comp-txtframe">TxtFrame</tag>
 </require>
 
-<TxtFrame size=(2rem,1rem)>textframe</TxtFrame>
+<TxtFrame size=(2rem,1rem)>text frame</TxtFrame>
 ```
 
 # Parameter
