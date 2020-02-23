@@ -29,15 +29,19 @@ npm install mofron mofron-comp-txtframe
 |:-------------:|:---------------|:-----|:------------|
 | ◯  | text | mixed | string: contents text |
 | | | | mofron-comp-text: contents component |
+| | | | undefined: call as getter |
 | | center | boolean | horizonal center position flag |
+| | | | undefined: call as getter |
 | | | boolean | vertical center position flag |
+| | | | undefined: call as getter |
 | | xCenter | boolean | true: text is centered horizontally (default) |
 | | | | false: text is not centered |
 | | | | undefined: call as getter |
 | | yCenter | boolean | true: text is centered vertically (default) |
 | | | | false: text is not centered |
 | | | | undefined: call as getter |
-| | mainColor | mixed (color) | string: color name, #hex |
+| | mainColor | mixed(color) | string: color name, #hex |
 | | | | array: [red, green, blue, alpha] |
+| | | | undefined: call as getter |
 | | | key-value | style option |
 

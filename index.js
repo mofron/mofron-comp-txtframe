@@ -49,6 +49,8 @@ module.exports = class extends Frame {
         try {
             super.initDomConts();
             this.style({ "display" : "grid" });
+            /* set text component */
+	    this.text(new Text());
 	    this.child(this.text());
         } catch (e) {
             console.error(e.stack);
@@ -72,10 +74,11 @@ module.exports = class extends Frame {
     }
     
     /**
-     * text contents
+     * text contents setter/getter
      *
      * @param (mixed) string: contents text
      *                mofron-comp-text: contents component
+     *                undefined: call as getter
      * @return (mofron-comp-text) contents component
      * @type parameter
      */
@@ -85,18 +88,20 @@ module.exports = class extends Frame {
 	        this.text().text(prm);
                 return;
 	    }
-	    return this.innerComp("text", prm, Text);
+	    return this.innerComp("text", prm);
         } catch (e) {
             console.error(e.stack);
             throw e;
         }
     }
-
+    
     /**
      * center position of text contents setter/getter
      *
      * @param (boolean) horizonal center position flag
+     *                  undefined: call as getter
      * @param (boolean) vertical center position flag
+     *                  undefined: call as getter
      * @return (array) center position flags
      * @type parameter
      */
@@ -160,10 +165,7 @@ module.exports = class extends Frame {
                     if (false === this.isExists()) {
                         chd[cidx].effect(new Hrzpos({ type: "center", tag: "TxtFrame" }));
                     } else {
-                        let hrz = chd[cidx].effect({ name: "HrzPos" });
-			if (null !== hrz) {
-                            hrz.execute();
-			}
+                        chd[cidx].effect({ name: "HrzPos", tag: "TxtFrame" }).execute();
 		    }
 		}
                 /* set vertical center */
@@ -171,10 +173,7 @@ module.exports = class extends Frame {
 		    if (false === this.isExists()) {
                         chd[cidx].effect(new Vrtpos({ type: "center" }));
                     } else {
-                        let vrt = chd[cidx].effect({ name: "VrtPos" });
-			if (null !== vrt) {
-                            vrt.execute();
-			}
+                        chd[cidx].effect({ name: "VrtPos", tag: "TxtFrame" }).execute();
 		    }
                 }
             }
@@ -187,10 +186,12 @@ module.exports = class extends Frame {
     /**
      * text color setter/getter
      * 
-     * @param (mixed (color)) string: color name, #hex
-     *                        array: [red, green, blue, alpha]
+     * @param (mixed(color)) string: color name, #hex
+     *                       array: [red, green, blue, alpha]
+     *                       undefined: call as getter
      * @param (key-value) style option
-     * @return (string) text color
+     * @return (mixed) string: text color
+     *                 null: not set
      * @type parameter
      */
     mainColor (prm, opt) {
