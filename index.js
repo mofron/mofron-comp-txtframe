@@ -16,7 +16,7 @@ module.exports = class extends Frame {
     /**
      * initialize component
      * 
-     * @param (mixed) 'text' parameter
+     * @param (mixed) text parameter
      *                key-value: component config
      * @short text
      * @type private
@@ -82,10 +82,11 @@ module.exports = class extends Frame {
      * @return (mofron-comp-text) contents component
      * @type parameter
      */
-    text (prm) {
+    text (prm, cnf) {
         try {
 	    if ("string" === typeof prm) {
 	        this.text().text(prm);
+		this.text().config(cnf);
                 return;
 	    }
 	    return this.innerComp("text", prm);
@@ -119,7 +120,6 @@ module.exports = class extends Frame {
      *
      * @param (boolean) true: text is centered horizontally (default)
      *                  false: text is not centered
-     *                  undefined: call as getter
      * @return (boolean) center position flag
      * @type parameter
      */
@@ -133,11 +133,10 @@ module.exports = class extends Frame {
     }
     
     /**
-     * vertical center position of text contents setter/getter
+     * vertical center position of text contents
      *
      * @param (boolean) true: text is centered vertically (default)
      *                  false: text is not centered
-     *                  undefined: call as getter
      * @return (boolean) center position flag
      * @type parameter
      */
@@ -186,12 +185,10 @@ module.exports = class extends Frame {
     /**
      * text color setter/getter
      * 
-     * @param (mixed(color)) string: color name, #hex
-     *                       array: [red, green, blue, alpha]
-     *                       undefined: call as getter
-     * @param (key-value) style option
-     * @return (mixed) string: text color
-     *                 null: not set
+     * @param (mixed (color)) string: color name, #hex
+     *                        array: [red, green, blue, alpha]
+     * @param (option) style option
+     * @return (string) text color
      * @type parameter
      */
     mainColor (prm, opt) {
