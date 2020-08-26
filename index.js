@@ -24,7 +24,7 @@ module.exports = class extends Frame {
     constructor (prm) {
         try {
             super();
-            this.name("TxtFrame");
+            this.modname("TxtFrame");
             this.shortForm("text");
             /* init config */
             this.confmng().add("text", { type: "Text" });

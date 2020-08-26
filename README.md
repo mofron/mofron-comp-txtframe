@@ -16,9 +16,9 @@ npm install mofron mofron-comp-txtframe
 
 # Sample
 ```html
-<require>
+<setting>
     <tag load="mofron-comp-txtframe">TxtFrame</tag>
-</require>
+</setting>
 
 <TxtFrame size=(2rem,1rem)>text frame</TxtFrame>
 ```
@@ -36,12 +36,9 @@ npm install mofron mofron-comp-txtframe
 | | | | undefined: call as getter |
 | | xCenter | boolean | true: text is centered horizontally (default) |
 | | | | false: text is not centered |
-| | | | undefined: call as getter |
 | | yCenter | boolean | true: text is centered vertically (default) |
 | | | | false: text is not centered |
-| | | | undefined: call as getter |
-| | mainColor | mixed(color) | string: color name, #hex |
+| | mainColor | mixed (color) | string: color name, #hex |
 | | | | array: [red, green, blue, alpha] |
-| | | | undefined: call as getter |
-| | | key-value | style option |
+| | | option | style option |
 
