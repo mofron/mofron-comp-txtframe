@@ -1,6 +1,6 @@
 {
   "name": "mofron-comp-txtframe",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "[mofron](https://mofron.github.io/mofron/) is module based frontend framework.",
   "main": "index.js",
   "scripts": {

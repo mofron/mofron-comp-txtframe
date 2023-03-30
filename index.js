@@ -162,7 +162,7 @@ module.exports = class extends Frame {
 		/* set horizonal center */
                 if (true === cent[0]) {
                     if (false === this.isExists()) {
-                        chd[cidx].effect(new Hrzpos({ type: "center", tag: "TxtFrame" }));
+                        chd[cidx].effect(new Hrzpos({ position: "center", tag: "TxtFrame" }));
                     } else {
                         chd[cidx].effect({ name: "HrzPos", tag: "TxtFrame" }).execute();
 		    }
@@ -170,7 +170,7 @@ module.exports = class extends Frame {
                 /* set vertical center */
                 if (true === cent[1]) {
 		    if (false === this.isExists()) {
-                        chd[cidx].effect(new Vrtpos({ type: "center" }));
+                        chd[cidx].effect(new Vrtpos({ position: "center" }));
                     } else {
                         chd[cidx].effect({ name: "VrtPos", tag: "TxtFrame" }).execute();
 		    }
